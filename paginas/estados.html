@@ -10,26 +10,30 @@
         function CarregarEstados() {
             var urlServico = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
             $.ajax({
-                type: "GET", 
+                type: "GET",
                 url: urlServico,
-                //async: true,
-                //data: null,
-                //cache: false,
-                succcess: function (retorno) {
+                async: false,
+                data: null,
+                cache: false,
+                success: function (retorno) {
                     if (retorno.lenght == 0) {
                         alert("Erro ao obter os dados.");
                     }
                     else {
-                        /*console.log(retorno);*/
-                        alert('teste');
+                        //console.log(retorno);
+                        for (var i = 0; i < length; i++) {
+                            var estado = retorno[i];
+                            var id = estado.id;
+                            var sigla = estado.sigla;
+                            var nome = estado.nome;
+                        }
                     }
                 }
-
             });
         }
 
         function Testar() {
-            alert('Testando o javascript!');
+            alert('Testando o javascript!!!');
         }
 
     </script>
@@ -39,15 +43,18 @@
     <br />
     <button id="btnCarregar" type="button" onclick="CarregarEstados();">Carregar</button>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Sigla</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sigla</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
     </table>
     <p><a href="../index.html">Voltar</a></p>
 
-    <button id="btnTestar" onclick="Testar();">Teste</button>
+    <buton id="btnTestar" onclick="Testar();">Teste</buton>
 
 
 </body>
