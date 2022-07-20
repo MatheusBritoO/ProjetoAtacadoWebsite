@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script lang="javascript">
+
+            $(document).ready( function() {
+                CarregarUser();
+
+                $('#ddlUSER').change(function() {
+                    $('#tblCOMM tbody').empty();
+                    var userid = $('#ddlUSER option:selected').val();
+                    CarregarPost(userid);
+                });
+                $('#ddlPOST').change(function() {
+                    var comid = $('#ddlPOST option:selected').val();
+                    CarregarComentarios(comid);
+                });
+
+            });
+
+           function CarregarUser() {
+                var urlServico ='https://jsonplaceholder.typicode.com/users' ;
+
+                $.get(urlServico, function (retorno, status) {
+
+                            if (retorno.lenght == 0) {
+                                    alert("Erro ao obter os dados.");
+                            }
+                            else {
+
+                                for (var i = 0; i <retorno.length; i++) {
+                                    var user = retorno[i];
+                                    var id = user.id;
+                                    var name = user.name;
+                                    var email = user.email;
+                                    var opcao = '<option value="' + id + '">'+name+' | '+ email +'</option>';
+                                    $('#ddlUSER').append(opcao);
+                                }
+                            }
+                    });
+            }
+
+            function CarregarPost(iduser){
+                var urlServico = 'https://jsonplaceholder.typicode.com/users/' + iduser + '/posts';
+                $.get(urlServico, function(retorno,status) {
+                    var keys = Object.keys(retorno);
+                    if (keys.lenght == 0) {
+                    alert("Erro ao obter os dados.");
+                    }
+                    else{
+                        for (var i = 0; i <retorno.length; i++){
+                            var post = retorno[i];
+                            var id = post.id;
+                            var title = post.title;
+                            var opcao = '<option value="' + id + '">'+ title +'</option>';
+                                $('#ddlPOST').append(opcao);
+                        }
+                    }
+                });
+            }
+
+            function CarregarComentarios(idcom) {
+            var urlServico = 'https://jsonplaceholder.typicode.com/posts/'+ idcom + '/comments';
+            $.get(urlServico, function (retorno, status) {
+                if (retorno.lenght == 0) {
+                    alert("Erro ao obter os dados.");
+                }
+                else {
+                    for (var i = 0; i <retorno.length; i++) {
+                        var comentario = retorno[i];
+                        var id = comentario.id;
+                        var name = comentario.name;
+                        var email = comentario.email;
+                        var body = comentario.body;
+
+                        var linhaINI = "<tr>";
+                        var colunaID = "<td>"+ id +"</td>";
+                        var colunaNAME = "<td>"+ name +"</td>";
+                        var colunaEMAIL = "<td>"+ email +"</td>";
+                        var colunaBODY = "<td>"+ body +"</td>"
+                        var linhaFIM = "</tr>";
+
+                        var linha = linhaINI + colunaID + colunaNAME + colunaEMAIL + colunaBODY +linhaFIM;
+
+                        $("#tblCOMM tbody").append(linha);
+                    }
+                }
+            });
+        }
+
+    </script>
+    <style>
+        .tblstyle, th {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <label for="ddlUSER"> USER:</label>
+                    <select id="ddlUSER" name="ddlUSER">
+                        <option value="0">Escolha um Usuario:</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="ddlPOST"> POST:</label>
+                    <select id="ddlPOST" name="ddlPOST">
+                        <option value="0">Escolha uma Publicação:</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <table id="tblCOMM" class="tblstyle">
+            <colgroup>
+                <col span="1" style="background-color: beige">
+                <col span="3" style="background-color: rgb(125, 255, 175)">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Body</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+</html>
