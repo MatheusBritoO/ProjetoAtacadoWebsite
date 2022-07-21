@@ -1,6 +1,12 @@
 $(document).ready(function(){
     CarregarCategorias();
+
+    $('#btnINCLUSAO').click(function (){
+        localStorage.setItem('opercat','1');
+        window.location.href = 'admincategorias.html';
+    });
 });             
+
 
 function CarregarCategorias() {
     var urlServico = 'https://localhost:7281/api/Categoria';
@@ -14,15 +20,29 @@ function CarregarCategorias() {
                 var id = categoria.codigo;
                 var descricao = categoria.descricao;
 
-                var linhaINI = "<tr>";
-                var colunaID = "<td>" + id + "</td>";
-                var colunaDescricao = "<td>" + descricao + "</td>";
-                var linhaFIM = "</tr>";
+                var linha ='';
 
-                var linha = linhaINI + colunaID + colunaDescricao + linhaFIM;
+                linha += "<tr>";
+                linha += "<td>" + id + "</td>";
+                linha += "<td>" + descricao + "</td>";
+                linha += '<td><button id="btnALTERAR" onclick="AcionarAlteracao('+ categoria.codigo+');">Alterar</button></td>';
+                linha += '<td><button id="btnEXCLUIR" onclick="AcionarExclusao('+ categoria.codigo+');">Excluir</button></td>';
+                linha += "</tr>";
 
                 $("#tblCategorias tbody").append(linha);
             }
         }
     });
+}
+
+function AcionarAlteracao(id){
+    localStorage.setItem('opercat','2');
+    localStorage.setItem('opercatid',id);
+    window.location.href = 'admincategorias.html';
+}
+
+function AcionarExclusao(id){
+    localStorage.setItem('opercat','3');
+    localStorage.setItem('opercatid',id);
+    window.location.href = 'admincategorias.html';
 }

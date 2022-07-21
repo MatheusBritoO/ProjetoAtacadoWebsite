@@ -1,79 +1,82 @@
 $(document).ready( function(){
     CarregarCategorias();
-    
+
     $('#ddlCAT').change(function() {
-        var subid = $('#ddlCAT option:selected').val();
-        CarregarSubcategoriaPorCat(subid);
+        var idcat = $('#ddlCAT option:selected').val();
+        CarregarSubcategorias(idcat);
     });
+
+    $('#ddlSUB').change(function() {
+        var idsub = $('#ddlSUB option:selected').val();
+        CarregarProdutos(idsub);
+    });
+
 });
 
 function CarregarCategorias() {
     var urlServico = 'https://localhost:7281/api/Categoria';
     $.get(urlServico, function (retorno, status) {
-        if (retorno.lenght == 0) {
+        var keys = Object.keys(retorno);
+        if (keys.lenght == 0) {
             alert("Erro ao obter os dados.");
         }
         else {
             for (var i = 0; i < retorno.length; i++) {
                 var categoria = retorno[i];
-                var idCategoria = categoria.codigo;
+                var id = categoria.codigo;
                 var descricao = categoria.descricao;
-                var opcao = '<option value="' + idCategoria + '">'+ descricao +'</option>';
+                var opcao = '<option value="' + id + '">' + descricao + '</option>';
                 $('#ddlCAT').append(opcao);
             }
         }
     });
 }
-    
-    function CarregarSubcategoriaPorCat(idcat) {
+
+function CarregarSubcategorias(idcat) {
     var urlServico = 'https://localhost:7281/api/Subcategoria/PorCategoria/' + idcat;
     $.get(urlServico, function (retorno, status) {
-        if (retorno.lenght == 0) {
+        var keys = Object.keys(retorno);
+        if (keys.lenght == 0) {
             alert("Erro ao obter os dados.");
         }
-        else {
-            for (var i = 0; i < retorno.length; i++) {
+        else{
+            for (var i = 0; i <retorno.length; i++){
                 var subcategoria = retorno[i];
-                var idSubcategoria = subcategoria.codigo;
-                var descricao = subcategoria.descricao;
-                var opcao = '<option value="' + idSubcategoria + '">'+ descricao +'</option>';
+                var idSubcategoria = subcategoria.idSubcategoria;
+                var descricao = subcategoria.descricaoSubcategoria;
+                var opcao = '<option value="' + idSubcategoria+ '">' + descricao + '</option>';
                 $('#ddlSUB').append(opcao);
             }
         }
     });
 }
-    
-function CarregarProduto(idpro) {
-    var urlServico = 'https://localhost:7281/api/Subcategoria/PorCategoria/' + idpro;
-
-    $.get(urlServico, function(retorno,status) {
+function CarregarProdutos(idsub) {
+    var urlServico = 'https://localhost:7281/api/Produto/PorSubcategoria/' + idsub;
+    $.get(urlServico, function (retorno, status) {
         var keys = Object.keys(retorno);
         if (keys.lenght == 0) {
-        alert("Erro ao obter os dados.");
+            alert("Erro ao obter os dados.");
         }
-        else {
-            for (var i = 0; i < retorno.length; i++) {
-                var produto = retorno[i];
-                var idProduto = subcategoria.idProduto;
-                var idSubcategoria = produto.idSubcategoria;
+        else{
+            for (var i = 0; i <retorno.length; i++){
+                var  produto = retorno[i];
+                var idProduto = produto.idSubcategoria;
+                var idSubcategoria = produto.descricaoSubcategoria;
                 var idCategoria = produto.idCategoria;
-                var descricao = produto.descricaoProduto;
+                var Descricao = produto.descricaoProduto;
+                
 
                 var linhaINI = "<tr>";
-                var colunaPRO = "<td>"+ idProduto +"</td>";
-                var colunaSUB = "<td>"+ idSubcategoria +"</td>";
-                var colunaCAT = "<td>"+ idCategoria +"</td>";
-                var colunaDES = "<td>"+ descricao +"</td>";
-                var linhaFIM = "</tr>"
-                var linha = linhaINI + colunaPRO +colunaSUB+ colunaCAT + colunaDES + linhaFIM;
+                var colunaCODIGO = "<td>" + idProduto + "</td>";   
+                var colunaSUB = "<td>" + idSubcategoria + "</td>";
+                var colunaCAT = "<td>" + idCategoria + "</td>"; 
+                var colunaDESCRICAO = "<td>" + descricaoProduto + "</td>";
+                var linhaFIM = "</tr>";
 
-                $("#tblSUB tbody").append(linha);
+                var linha = linhaINI + colunaCODIGO + colunaSUB + colunaCAT  +colunaDESCRICAO  + linhaFIM;
+
+                $("#tblPRO tbody").append(linha);
             }
-        }                         
-        
-    });
+        }
+    });    
 }
-
-                       
-        
-  
