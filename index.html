@@ -1,15 +1,64 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <style>
+         table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+         }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  background-color: #f3f3f3;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #15d8ff;
+}
+
+li a.active {
+  color: white;
+  background-color: #00d5ff;
+}
+</style>
     <meta charset="utf-8" />
     <title></title>
-</head>
-<body>
 
-    <h1>Atacado API - Capacitação PSG 202204</h1>
-    <p>Recursos disponiveis:</p>
-    <p><a href="paginas/estados.html">Estados</a></p>
-    <p><a href="paginas/detalhesmunicipioporuf.html">Detalhes Municipios</a></p>
-    <p><a href="paginas/jsonplaceholder.html">Detalhes Desafio 01 | Data:19/07/2022 </a></p>
+
+</head>
+
+<body>
+    <h1  style="border:3px solid black; text-align:center;" >Atacado API - Capacitação PSG 202204</h1>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="paginas/atacado/estoque/categorias.html">Categoria</a></li>
+        <li><a href="paginas/atacado/estoque/subcategorias.html">Subcategoria</a></li>
+        <li><a href="paginas/atacado/estoque/produtos.html">Produto</a></li>
+      </ul>
+
+    
+    <p></p>
+    <p style="text-align:center;">Recursos disponiveis:</p>
+    <p style="text-align:center;"><a href="paginas/estados.html">Estados</a></p>
+    <p style="text-align:center;"><a href="paginas/detalhesmunicipioporuf.html">Detalhes Municipios</a></p>
+    <p style="text-align:center;"><a href="paginas/jsonplaceholder.html">Detalhes Desafio 01 | Data:19/07/2022 </a></p>
+
+    
+
 </body>
 </html>
